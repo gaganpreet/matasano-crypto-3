@@ -1,2 +1,4 @@
 17 - cbc_padding_oracle.py
 18 - implement_ctr.py
+19 - substitution_break_ctr.py
+20 - xor_method_break_ctr.py 
