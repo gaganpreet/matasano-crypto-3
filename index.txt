@@ -5,3 +5,4 @@
 21 - mersenne_twister.py
 22 - crack_mt_seed.py
 23 - clone_mt.py
+24 - mt_cipher.py
