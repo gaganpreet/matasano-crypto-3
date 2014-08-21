@@ -2,6 +2,7 @@ from mersenne_twister import MersenneTwister
 
 class ClonedMersenneTwister:
     length = 624
+
     def __init__(self, state, index):
         self.state = state[:]
         self.index = index
@@ -21,7 +22,7 @@ class ClonedMersenneTwister:
 
     def generate_numbers(self):
         for i in xrange(self.length):
-            y = (self.state[i] & 0x80000000) + ((self.state[(i+1)%self.length]) & 0x7fffffff)
+            y = (self.state[i] & 0x80000000) + ((self.state[(i+1) % self.length]) & 0x7fffffff)
             self.state[i] = self.state[(i + 397) % self.length] ^ (y >> 1)
             if y % 2:
                 self.state[i] ^= 2567483615
@@ -79,4 +80,4 @@ if __name__ == '__main__':
     mt = MersenneTwister(0)
     cmt = clone_mt(mt)
     for i in xrange(10):
-        print "From cloned: %s, from original: %s"%(mt.next(), cmt.next())
+        print "From cloned: %s, from original: %s" % (mt.next(), cmt.next())

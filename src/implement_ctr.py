@@ -24,7 +24,7 @@ def ctr_encrypt(text, key='YELLOW SUBMARINE', nonce=0):
     c = Counter()
     encrypted = ''
     for block in blocks:
-        keystring = util.ecb_encrypt(c.next(), key) 
+        keystring = util.ecb_encrypt(c.next(), key)
         encrypted += util.string_xor(keystring, block)
 
     return encrypted
@@ -37,7 +37,7 @@ def ctr_decrypt(text, key='YELLOW SUBMARINE', nonce=0):
     c = Counter()
     decrypted = ''
     for block in blocks:
-        keystring = util.ecb_encrypt(c.next(), key) 
+        keystring = util.ecb_encrypt(c.next(), key)
         decrypted += util.string_xor(keystring, block)
 
     return decrypted

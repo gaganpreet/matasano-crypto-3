@@ -12,7 +12,7 @@ def rng():
 def update_progress(done, total):
     sys.stdout.write('\b'*4)
     progress = str(int(100.0*done/total))
-    text = (3 - len(progress)) * ' ' + progress +  '%'
+    text = (3 - len(progress)) * ' ' + progress + '%'
     sys.stdout.write(text)
     sys.stdout.flush()
 

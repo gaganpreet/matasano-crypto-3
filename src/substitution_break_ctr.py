@@ -9,9 +9,6 @@ import util
 
 
 # From wikipedia article on trigrams and letter frequencies
-#trigrams = ['the', 'and', 'tha', 'ent', 'ing', 'ion', 'tio', 'for', 'nde', 'has', 'nce', 'edt', 'tis', 'oft', 'sth', 'men', ]
-#first_letter_frequencies = ['t', 'a', 's', 'h', 'w', 'i', 'o', 'b', 'm', 'f', 'c', 'l', 'd', 'p', 'n', 'e', 'g', 'r', 'y', 'u', 'v', 'j', 'k', 'q', 'x', 'z', ]
-
 allowed_letters = string.letters + ',.\'"-)(:!?; '
 
 unigrams = [' ', 'e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'c', 'u', 'm', 'w', 'f', 'g', 'y', 'p', 'b', 'v', 'k', 'j', 'x', 'q', 'z', ]
@@ -50,7 +47,7 @@ class KeyStream:
                 s += '\0'
         return s
 
-keystream=KeyStream(0)
+keystream = KeyStream(0)
 
 def get_ciphertexts():
     return [ctr_encrypt(b64decode(line)) for line in open('substitution_break_ctr.in').readlines()]
@@ -94,7 +91,7 @@ def repeated_ngrams(ciphertexts, ngram_length):
 
 def try_ngrams(ciphertexts, length, ngram_frequency):
     ''' Match most repeated ngram with most common possible
-        ngrams (from the list declared above), going down to least 
+        ngrams (from the list declared above), going down to least
         possible occurence
     '''
     global trigrams
@@ -112,10 +109,9 @@ def try_ngrams(ciphertexts, length, ngram_frequency):
             for ciphertext in ciphertexts:
                 s += util.string_xor(possible_keystream, ciphertext[start:start+length]) + '-'
             if len(s.strip(allowed_letters)) == 0:
-                #            print start, possible_keystream, keystream.available(start, possible_keystream)
                 if keystream.available(start, possible_keystream):
                     keystream.assign(start, possible_keystream)
-        
+
 def print_decoded(ciphertexts, keystream):
     for ciphertext in ciphertexts:
         print repr(util.string_xor(ciphertext, str(keystream)))
@@ -127,7 +123,6 @@ def main():
     max_length = max([len(i) for i in ciphertexts])
     keystream = KeyStream(max_length)
 
-    
     try_ngrams(ciphertexts, 1, unigrams)
     print '-----------------After unigrams------------------'
     print 'Keystream: ', repr(keystream)

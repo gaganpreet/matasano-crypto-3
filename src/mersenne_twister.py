@@ -1,5 +1,6 @@
 class MersenneTwister:
     length = 624
+
     def __init__(self, seed=0):
         self.state = [0]*self.length
         self.index = 0
@@ -7,7 +8,7 @@ class MersenneTwister:
         self.state[0] = seed
         for i in xrange(1, self.length):
             t = 1812433253 * (self.state[i-1] ^ (self.state[i-1] >> 30)) + i
-            self.state[i] = t & (2**32 -1)
+            self.state[i] = t & (2**32 - 1)
 
     def next(self):
         if self.index == 0:
@@ -24,7 +25,7 @@ class MersenneTwister:
 
     def generate_numbers(self):
         for i in xrange(self.length):
-            y = (self.state[i] & 0x80000000) + ((self.state[(i+1)%self.length]) & 0x7fffffff)
+            y = (self.state[i] & 0x80000000) + ((self.state[(i+1) % self.length]) & 0x7fffffff)
             self.state[i] = self.state[(i + 397) % self.length] ^ (y >> 1)
             if y % 2:
                 self.state[i] ^= 2567483615

@@ -2,7 +2,6 @@
 
 import random
 from Crypto.Cipher import AES
-from base64 import b64decode
 
 ''' Some util functions '''
 
@@ -67,6 +66,6 @@ def pkcs_pad(string, block_size):
 def is_valid_padding(string):
     ''' Test for validity of PKCS 7 padding on a string '''
     last = string[-1]
-    if last * ord(last) == string[-ord(last):]: 
+    if last * ord(last) == string[-ord(last):]:
         return True
     return False

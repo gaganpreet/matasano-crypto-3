@@ -1,10 +1,9 @@
 #!/usr/bin/python
 
-import os
 import math
 import random
-from base64 import b64decode, b64encode
-from util import random_string, cbc_encrypt, cbc_decrypt, pkcs_pad, is_valid_padding  
+from base64 import b64decode
+from util import random_string, cbc_encrypt, cbc_decrypt, is_valid_padding
 
 class RandomAES:
     def __init__(self, block_size=16):
@@ -32,7 +31,7 @@ def decryptor(block_size):
 
     cipher_text, iv = random_aes.encrypt()
 
-    total_blocks = int(math.ceil( len(cipher_text)/block_size ))
+    total_blocks = int(math.ceil(len(cipher_text)/block_size))
     string = ''
     for block_number in xrange(total_blocks):
         string += decrypt_block(cipher_text, iv, block_number, block_size, random_aes.decrypt)
@@ -69,7 +68,7 @@ def decrypt_block(cipher_text, iv, block_number, block_size, oracle):
         previous_block = cipher_text[block_start - block_size:block_start]
     else:
         previous_block = iv
-    
+
     # The modified block which will be replaced (iv/previous block)
     modified_block = bytearray('\0' * block_size)
 
@@ -89,7 +88,7 @@ def decrypt_block(cipher_text, iv, block_number, block_size, oracle):
                 modified_cipher_text = cipher_text[:block_end]
             else:
                 modified_cipher_text = cipher_text[:(block_start-16)] + modified_block + cipher_text[block_start:block_end]
-                
+
             # Found a match
             if oracle(str(modified_cipher_text), passed_iv):
                 decoded_block[i] = c ^ pad_char ^ ord(previous_block[i])
